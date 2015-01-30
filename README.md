@@ -1,8 +1,6 @@
 # H5P.Plugins.barcode
-HTML5 plus 二维码插件
-> This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
-> consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
-> Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
-> 
-> Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
-> id sem consectetuer libero luctus adipiscing.
+该工程为HTML5 plus 二维码插件实现,参见https://github.com/dcloudio/H5P.Core
+# 目录结构
+ Android AndroidNative层实现  
+ iOS iOSNative层实现  
+ js JS Api实现  
