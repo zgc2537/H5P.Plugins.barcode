@@ -1,0 +1,10 @@
+<properties>
+	<features>
+		<feature name="UI" value="io.dcloud.feature.ui.UIFeatureImpl"></feature>
+		<feature name="Runtime" value="io.dcloud.feature.pdr.RuntimeFeatureImpl"></feature>
+		<feature name="Barcode" value="io.dcloud.feature.barcode.BarcodeFeatureImpl"></feature>
+	</features>	
+	
+	<services>
+	</services>
+</properties>
