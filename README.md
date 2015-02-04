@@ -6,4 +6,4 @@
  js JS Api实现  
 
 #License
- mui遵循MIT License；
+遵循MIT License；
