@@ -4,3 +4,6 @@
  Android AndroidNative层实现  
  iOS iOSNative层实现  
  js JS Api实现  
+
+#License
+ mui遵循MIT License；
