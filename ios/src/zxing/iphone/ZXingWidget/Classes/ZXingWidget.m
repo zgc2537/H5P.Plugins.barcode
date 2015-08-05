@@ -326,6 +326,10 @@ double radians(float degrees) {
     return ( degrees * 3.14159265 ) / 180.0;
 }
 - (void)initCapture {
+    if ( [PTDeviceOSInfo systemVersion] >= PTSystemVersion7Series
+        && AVAuthorizationStatusDenied == [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] ) {
+        return;
+    }
 #if HAS_AVFF
     AVCaptureDevice* inputDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     AVCaptureDeviceInput *captureInput =[AVCaptureDeviceInput deviceInputWithDevice:inputDevice error:nil];

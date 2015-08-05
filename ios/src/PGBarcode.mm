@@ -14,7 +14,6 @@
  *------------------------------------------------------------------
  */
 #import "PGBarcode.h"
-#import "PTPathUtil.h"
 #import <QRCodeReader.h>
 #import "TwoDDecoderResult.h"
 #import "Decoder.h"
@@ -31,7 +30,7 @@
 #import "libBarcode/zxing/iphone/ZXingWidget/Classes/MultiFormatUPCEANReader.h"
 #import "libBarcode/zxing/iphone/ZXingWidget/Classes/DataMatrixReader.h"
 
-
+@class PTPathUtil;
 @interface DHDecode : Decoder
 @property(nonatomic, retain)NSString *decImgPath;
 @property(nonatomic, retain)NSString *jsCBId;
