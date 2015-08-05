@@ -18,8 +18,6 @@
 #import "TwoDDecoderResult.h"
 #import "Decoder.h"
 #import "QRCodeReader.h"
-#import "PDRCoreFeature.h"
-#import "PTLog.h"
 #import "PDRToolSystemEx.h"
 #import "PDRCoreWindowManager.h"
 #import "PDRCommonString.h"
@@ -112,7 +110,6 @@
         _widget.readers = readers;
         [self.JSFrameContext.webView.scrollView addSubview:_widget];
     }
-    PDR_LOG_INFO(@"Barcode create-!!");
 }
 
 - (void)start:(PGMethod*)command {
@@ -217,7 +214,6 @@ failedToDecodeImage:(UIImage *)image
         withDecodeImage:(UIImage*)dImg
           didScanResult:(NSString *)result
           didScanFormat:(BarcodeFormat)format {
-    PDR_LOG_INFO(@"zxingController");
     [_widget pauseScan];
     NSString *relativeDecodeFilePath = nil;
     if ( self.decodeImgWToFile ) {
@@ -266,7 +262,6 @@ failedToDecodeImage:(UIImage *)image
                                            messageAsDictionary:[self decodeResutWithText:result format:format file:relativeDecodeFilePath]];
     [jsRet setKeepCallback:YES];
     [self toCallback:self.callBackID withReslut:[jsRet toJSONString]];
-    PDR_LOG_INFO(@"zxingController exec end");
 }
 
 #pragma mark -
