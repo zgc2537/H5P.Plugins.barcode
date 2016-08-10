@@ -46,13 +46,30 @@ public class BarcodeProxy implements ISysEventListener {
 					}
 				}
 				mBarcodeView.mConserve = _conserve;
-				mBarcodeView.start();
+				boolean _beep = true;
+				_beep = PdrUtil.parseBoolean(JSONUtil.getString(args, "beep"), _beep, true);
+				boolean _vibrate = true;
+				_vibrate = PdrUtil.parseBoolean(JSONUtil.getString(args, "vibrate"), _vibrate, true);
+				boolean _continuous = false;
+				_continuous = PdrUtil.parseBoolean(JSONUtil.getString(args, "continuous"), _continuous, false);
+				long _continuousDelay = PdrUtil.parseLong(JSONUtil.getString(args, "continuous_delay"), 2000L);
+				mBarcodeView.start(_beep, _vibrate, _continuous, _continuousDelay);
 			}
 		}else if("cancel".equals(pActionName)){
 			mBarcodeView.cancel();
 		}else if("setFlash".equals(pActionName)){
 			mBarcodeView.setFlash(Boolean.parseBoolean(pJsArgs[0]));
-		}else if("Barcode".equals(pActionName)){
+		}else if("setContinuous".equals(pActionName)){
+			mBarcodeView.setContinuous(Boolean.parseBoolean(pJsArgs[0]));
+		}else if("setContinuousDelay".equals(pActionName)){
+			mBarcodeView.setContinuousDelay(Long.parseLong(pJsArgs[0]));
+		}else if("setBeep".equals(pActionName)){
+			mBarcodeView.setBeep(Boolean.parseBoolean(pJsArgs[0]));
+		}else if("setVibrate".equals(pActionName)){
+			mBarcodeView.setVibrate(Boolean.parseBoolean(pJsArgs[0]));
+		}
+
+		else if("Barcode".equals(pActionName)){
 			if(!mIsRegisetedSysEvent){
 				IApp app = pWebViewImpl.obtainFrameView().obtainApp();
 				app.registerSysEventListener(this, SysEventType.onPause);

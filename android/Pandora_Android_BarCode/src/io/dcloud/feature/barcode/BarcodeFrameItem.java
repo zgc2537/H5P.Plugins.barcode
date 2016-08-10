@@ -51,9 +51,11 @@ class BarcodeFrameItem extends AdaFrameItem implements Callback,IBarHandler{
 	private String characterSet;
 	private InactivityTimer inactivityTimer;
 	private MediaPlayer mediaPlayer;
-	private boolean playBeep;
+	private boolean playBeep = true;
 	private static final float BEEP_VOLUME = 0.10f;
-	private boolean vibrate;
+	private boolean vibrate = true;
+	private boolean continuous = false;//是否连续扫描
+	private long continuousDelay = 2000L;//连续扫描间隔时间
 	SurfaceView surfaceView;
 	String mCallbackId = null;
 	private Context mAct;
@@ -171,13 +173,13 @@ class BarcodeFrameItem extends AdaFrameItem implements Callback,IBarHandler{
 //		decodeFormats = null;
 //		characterSet = null;
 
-		playBeep = true;
+		//playBeep = true;
 		AudioManager audioService = (AudioManager) mAct.getSystemService(Activity.AUDIO_SERVICE);
 		if (audioService.getRingerMode() != AudioManager.RINGER_MODE_NORMAL) {
 			playBeep = false;
 		}
 		initBeepSound();
-		vibrate = true;
+		//vibrate = true;
 		if(isSysEvent){//系统事件过来的通知
 			if(mRunning){//系统时间过来的时候处于扫描状态
 				mRunning = false;//认为设置处于非扫描状态，因为onpause事件可能引起扫描状态改变
@@ -207,9 +209,26 @@ class BarcodeFrameItem extends AdaFrameItem implements Callback,IBarHandler{
 		}
 	}
 
+	protected void start(boolean beep, boolean vibrate, boolean continuous, long continuousDelay) {
+		this.playBeep = beep;
+		this.vibrate = vibrate;
+		this.continuous = continuous;
+		this.continuousDelay = continuousDelay;
+		start();
+	}
+
 	public void setFlash(boolean enable){
 		CameraManager.get().setFlashlight(enable);
 	}
+
+	public void setContinuous(boolean continuous) {this.continuous = continuous;}
+
+	public void setContinuousDelay(long continuousDelay) {this.continuousDelay = continuousDelay;}
+
+	public void setBeep(boolean beep) {this.playBeep = beep;}
+
+	public void setVibrate(boolean vibrate) {this.vibrate = vibrate;}
+
 	protected void cancel() {
 		if(mRunning){
 			if (handler != null) {
@@ -305,7 +324,11 @@ class BarcodeFrameItem extends AdaFrameItem implements Callback,IBarHandler{
 			 json = String.format(message, num,JSONUtil.toJSONableString(obj.getText())); 
 		 }
 		 JSUtil.execCallback(mWebViewImpl, mCallbackId, json, JSUtil.OK, true, true);
-		 cancel();//start一次只能有一次结果，所以成功之后需要停止
+		if(continuous) {
+			handler.sendEmptyMessageDelayed(CaptureActivityHandler.CODE_RESTART_PREVIEW, continuousDelay);
+		} else {
+			cancel();//start一次只能有一次结果，所以成功之后需要停止
+		}
 	}
 
 	private void initBeepSound() {

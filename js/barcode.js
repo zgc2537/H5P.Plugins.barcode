@@ -37,6 +37,22 @@
         B.exec( _BARCODE, "cancel", [] );
     };
 
+    proto.setContinuous = function(continuous) {
+        B.exec( _BARCODE, "setContinuous", [continuous]);
+    };
+    
+    proto.setContinuousDelay = function(continuousDelay) {
+        B.exec( _BARCODE, "setContinuousDelay", [continuousDelay]);
+    };
+    
+    proto.setBeep = function(beep) {
+        B.exec( _BARCODE, "setBeep", [beep]);
+    };
+    
+    proto.setVibrate = function(vibrate) {
+        B.exec( _BARCODE, "setVibrate", [vibrate]);
+    };
+
     var barcode = {
 		Barcode : Barcode,
 		scan : function (path, successCallback, errorCallback, filters ) {

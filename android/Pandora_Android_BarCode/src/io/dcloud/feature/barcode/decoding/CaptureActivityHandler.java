@@ -101,6 +101,8 @@ public final class CaptureActivityHandler extends Handler {
         state = State.PREVIEW;
         CameraManager.get().requestPreviewFrame(activity,decodeThread.getHandler(), CODE_DECODE);
         break;
+      case CODE_RESTART_PREVIEW:
+        restartPreviewAndDecode();
     }
   }
 
@@ -142,6 +144,7 @@ public final class CaptureActivityHandler extends Handler {
   public static final int CODE_DECODE_SUCCEEDED = 1002;
   public static final int CODE_QUIT = 1003;
   public static final int CODE_DECODE = 1004;
+  public static final int CODE_RESTART_PREVIEW = 1005;
   
   public static Result decode(Bitmap map){
 	  return DecodeHandler.decode(map);
